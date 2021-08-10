@@ -16,6 +16,10 @@ const ProductCard = (props) => {
       return display_date;
    }
 
+   const handleAddToCart = (e, product_data) => {
+      console.log(product_data)
+   }
+
    return (<React.Fragment>
          {
             props.ascii_data.map( (ascii,key) => {
@@ -30,9 +34,9 @@ const ProductCard = (props) => {
                         <h6 className="title text-center text-uppercase mt-2 ">
                            { ascii.words.map( (word,key) => <span key={key}>{ word } </span> )}
                         </h6>
-                        <div class="caption-separator"></div> 
+                        <div className="caption-separator"></div> 
                         </Card.Title>
-                        <div class="product-container">
+                        <div className="product-container">
                            <Card.Text style={{fontSize:`${ascii.size}px`}}>{ ascii.ascii }</Card.Text>
                         </div>
                      </Card.Body>
@@ -48,13 +52,9 @@ const ProductCard = (props) => {
                      </Col>
                      <Col className="text-end p-0">
                         <div className="text-center price"><span>${ ascii.price }</span></div>
-                        <Button className="add-to-cart ">Add to cart</Button>
+                        <Button className="add-to-cart" onClick={(e)=>handleAddToCart(e, ascii)}>Add to cart</Button>
                      </Col>
-                  </Row>
-                  {/* <div class="caption-separator"></div> */}
-                  {/* <h6 className="title text-uppercase mt-2 ">
-                     { ascii.words.map( (word,key) => <span key={key}>{ word } </span> )}
-                  </h6> */}
+                  </Row> 
                </Col> )
             })
          }

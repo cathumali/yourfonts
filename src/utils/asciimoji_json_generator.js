@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import uuid from 'react-uuid'
 
 /*
   ASCIImoji JS
@@ -603,7 +604,8 @@ const modifyArray = () => {
       ...item,
       price: rounded_price,
       size: random_size,
-      date : random_date
+      date : random_date,
+      id: uuid(),
     }
   })
 }
