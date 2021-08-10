@@ -6,6 +6,7 @@ import _ from 'lodash';
 // import { handleSaveToPC } from './utils/asciimoji_json_generator';
 
 function App() {
+  // handleSaveToPC()
   return (<div className="col-lg-8 mx-auto p-3 py-md-5"> 
         <Header/> 
         <Main />

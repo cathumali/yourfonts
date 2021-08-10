@@ -595,8 +595,8 @@ const modifyArray = () => {
     
   const asciimojis = getAllAsciiEmojis();
   return asciimojis.map((item,key) => {
-    const random_date = randomDate(new Date(2018, 0, 1), new Date())
-    const price = _.random(1,5, true)
+    const random_date = randomDate(new Date(2021, 0, 5), new Date())
+    const price = _.random(1,50, true)
     const rounded_price = _.ceil( price, 2);
     const random_size = _.random(8, 35)
     return {
@@ -608,7 +608,7 @@ const modifyArray = () => {
   })
 }
 
-export const handleSaveToPC = jsonData => {
+export const handleSaveToPC = () => {
   const asciimojis = modifyArray();
   const fileData = JSON.stringify(asciimojis);
   const blob = new Blob([fileData], {type: "text/plain"});
@@ -617,6 +617,4 @@ export const handleSaveToPC = jsonData => {
   link.download = 'ascii.json';
   link.href = url;
   link.click();
-}
- 
-// handleSaveToPC()
+} 
