@@ -90,9 +90,7 @@ class Main extends Component {
          page: page + 1,
          nextPage: nextPage + 1, 
 
-      } ,  this.advancedFetchNextPage );
-      // setTimeout(() => {
-      // }, 2000);
+      } ,  this.advancedFetchNextPage ); 
    }
 
    fetchInitialData = async ( intialLoad=false ) => {
@@ -143,9 +141,11 @@ class Main extends Component {
    }
 
 
-   sortAsciiFaceBy = ( sort_by ) => {
-      const ascii_data = _.sortBy(this.state.ascii_data, ['sort_by']);
-
+   sortByFilterHandle = ( data ) => {
+      // const ascii_data = _.sortBy(this.state.ascii_data, ['sort_by']);
+      console.log( data.name, data.value)
+      const ascii_data = _.orderBy(this.state.ascii_data, [data.name], [data.value]);
+      this.setState({ ascii_data })
    }
 
    componentWillUnmount = () => {
@@ -165,7 +165,7 @@ class Main extends Component {
 
             <Row className="row g-5 mb-4">
                <Col>
-                  <SortAsciiFacesBy />
+                  <SortAsciiFacesBy sortByFilterHandle={this.sortByFilterHandle} />
                </Col>
             </Row>
    
