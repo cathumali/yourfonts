@@ -118,7 +118,6 @@ class Main extends Component {
       if( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500)  
             &&  document.getElementsByClassName('loading_container').length
       ){  
-         console.log('scrolled')
          this.setState({ 
             scrolled: true, 
             loading : false,
@@ -163,7 +162,7 @@ class Main extends Component {
    render() {
 
       const { loading, ascii_data } = this.state || {}; 
-      
+
       return (<main>
             <h1>Shop for fonts</h1>
             <p className="fs-5 col-md-8">
