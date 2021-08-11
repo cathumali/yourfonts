@@ -34,7 +34,6 @@ const LoadingComponent = (props) => {
    }else {
       return <Col className="loading_container hidden">Load more </Col>
    }
-   return null
 }
 class Main extends Component {
    constructor(props){
