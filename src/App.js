@@ -2,15 +2,16 @@ import React from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Main from './components/Main';
+import { Container } from 'react-bootstrap';
 // import { handleSaveToPC } from './utils/asciimoji_json_generator';
 
-function App() {
+const App = () => {
   // handleSaveToPC()
-  return (<div className="col-lg-8 mx-auto p-3 py-md-5"> 
+  return (<Container > 
         <Header/> 
         <Main />
         <Footer />
-      </div> 
+      </Container> 
   );
 }
 

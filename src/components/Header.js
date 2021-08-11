@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = (props) => {
+const Header = () => {
     return (<>
         <div className="d-flex align-items-end flex-column">   
             <div className="svg-cart">

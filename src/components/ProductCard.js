@@ -44,15 +44,18 @@ const ProductCard = (props) => {
                   <Row className="mx-1 details-container mt-2">
                      <Col className="p-0 position-relative">
                         <div className="size-date">
+                           <div className="price"><span>${ ascii.price }</span></div>
                            <span>Size:<b> {ascii.size}px</b></span>
+                          
+                        </div>
+                     </Col>
+                     <Col className="text-end p-0">
+                        <div className="cart-container">
+                           <Button className="add-to-cart" onClick={(e)=>handleAddToCart(e, ascii)}>Add to cart</Button>
                            <p className="font-italic"> 
                               <small>{ display_date }</small>
                            </p>
                         </div>
-                     </Col>
-                     <Col className="text-end p-0">
-                        <div className="text-center price"><span>${ ascii.price }</span></div>
-                        <Button className="add-to-cart" onClick={(e)=>handleAddToCart(e, ascii)}>Add to cart</Button>
                      </Col>
                   </Row> 
                </Col> )
