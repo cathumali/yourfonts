@@ -1,9 +1,8 @@
-import React, { Component, useState, useEffect } from 'react';
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Row, Col } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import SortAsciiFacesBy from './SortAsciiFacesBy';
 import _ from 'lodash';
-
 
 const apiGetsService =  async (page) => {
    const requestHeaders= {
@@ -45,8 +44,8 @@ class Main extends Component {
          page: 0,
          nextPage: 1,
          _start : 0,
-         _end : 200,
-         chunks : 200,
+         _end : 20,
+         chunks : 20,
          remaining: 0,
          firstload : false,
          nextAsciiData : {
@@ -69,6 +68,7 @@ class Main extends Component {
          const data = await apiGetsService( this.state.nextPage );
 
          if (data ) {
+
             this.setState({
                loading_more : false,
                nextAsciiData : {
@@ -129,7 +129,7 @@ class Main extends Component {
                this.setState({ 
                   ...this.state.nextAsciiData,
                   scrolled: false,
-                  ascii_data: ascii_data,
+                  ascii_data,
                   nextAsciiData: {},
                   loading_more: false,
          
@@ -162,7 +162,7 @@ class Main extends Component {
    render() {
 
       const { loading, ascii_data } = this.state || {}; 
-      
+      console.log(ascii_data?.length)
       return (<main>
             <h1>Shop for fonts</h1>
             <p className="fs-5 col-md-8">
