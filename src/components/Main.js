@@ -4,6 +4,7 @@ import ProductCard from './ProductCard';
 import SortAsciiFacesBy from './SortAsciiFacesBy';
 import _ from 'lodash';
 
+
 const apiGetsService =  async (page) => {
    const requestHeaders= {
       method : 'GET',
@@ -14,8 +15,27 @@ const apiGetsService =  async (page) => {
    } 
    const res = await fetch(`../json/ascii.json?page=${page}`, requestHeaders).then(response => response.json());
    return res;
- }
+}
 
+const LoadingComponent = (props) => {
+   const { loading, loading_more, total, ascii_data } = props || {}; 
+   if(total == ascii_data?.length){
+      return <Col >~ end of catalogue ~</Col>
+   }
+   if( loading_more) {
+      return  (<Col>
+            <p className="mt-2">
+               <button className="btn btn-default" type="button" disabled>
+               <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+               {' '}Loading...
+               </button>
+            </p>
+         </Col>)
+   }else {
+      return <Col className="loading_container hidden">Load more </Col>
+   }
+   return null
+}
 class Main extends Component {
    constructor(props){
       super(props);
@@ -33,7 +53,6 @@ class Main extends Component {
          nextAsciiData : {
             ascii_data: [],
             total: 0,
-            ascii_data: 0,
             page: 0,
             nextPage: 0,
             _start : 0,
@@ -44,33 +63,26 @@ class Main extends Component {
 
    advancedFetchNextPage = async () => {
       this.setState({ loading_more : true });
+ 
+      if( parseInt(this.state.remaining) > 1  ) { 
 
-      const count = this.state.remaining > 1 ;
-      const { ascii_data } = this.state.nextAsciiData || {};
-      console.log(ascii_data)
-      
-      if( count ) {
-         
-         if( ascii_data && !ascii_data?.length ) {
+         const { total, _end, chunks, page, nextPage } = this.state || {};         
+         const data = await apiGetsService( this.state.nextPage );
 
-            // console.log('advancedFetchNextPage')
-            const { _end, chunks, page, nextPage } = this.state || {};         
-            const data = await apiGetsService( this.state.nextPage );
-   
-            if (data ) {
-               this.setState({
-                  loading_more : false,
-                  nextAsciiData : {
-                     total: data.length,
-                     ascii_data: data.splice( parseInt( 0 ), parseInt( _end + chunks ) ),
-                     page: page + 1,
-                     nextPage: nextPage + 1,
-                     _start : _end + 1,
-                     _end : _end + chunks,
-                  }
-               })
-            } 
-         }
+         if (data ) {
+            this.setState({
+               loading_more : false,
+               nextAsciiData : {
+                  total: data.length,
+                  ascii_data: data.splice( parseInt( 0 ), parseInt( _end + chunks ) ),
+                  page: page + 1,
+                  nextPage: nextPage + 1,
+                  _start : _end + 1,
+                  _end : _end + chunks,
+                  remaining: total - _end,
+               }
+            })
+         }  
       } 
    }
    
@@ -106,6 +118,7 @@ class Main extends Component {
       if( (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500)  
             &&  document.getElementsByClassName('loading_container').length
       ){  
+         console.log('scrolled')
          this.setState({ 
             scrolled: true, 
             loading : false,
@@ -131,7 +144,6 @@ class Main extends Component {
    
 
    componentDidMount = () => {
-      // console.log(this.state)
       this.fetchInitialData( true );
       document.addEventListener('scroll', this.onScroll, false );
       window.addEventListener('scroll', this.onScroll, false )
@@ -139,10 +151,8 @@ class Main extends Component {
 
 
    sortByFilterHandle = ( data ) => {
-      // const ascii_data = _.sortBy(this.state.ascii_data, ['sort_by']);
-      console.log( data.name, data.value)
       const ascii_data = _.orderBy(this.state.ascii_data, [data.name], [data.value]);
-      this.setState({ ascii_data })
+      this.setState({ ascii_data });
    }
 
    componentWillUnmount = () => {
@@ -150,10 +160,10 @@ class Main extends Component {
       window.removeEventListener('scroll', this.onScroll, false )
    }
    
-
-
    render() {
-      const { loading, loading_more, nextAsciiData, ascii_data } = this.state || {}; 
+
+      const { loading, ascii_data } = this.state || {}; 
+      
       return (<main>
             <h1>Shop for fonts</h1>
             <p className="fs-5 col-md-8">
@@ -170,23 +180,9 @@ class Main extends Component {
                <ProductCard loading={loading} ascii_data={ascii_data} />
             </Row>
 
-            { !loading && 
-               <Row className="row g-5 text-center"> 
-                  {  loading_more ? 
-                     <Col>
-                        <p className="mt-2">
-                           <button className="btn btn-default" type="button" disabled>
-                           <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                           {' '}Loading...
-                           </button>
-                        </p>
-                     </Col> :
-                     <Col className="loading_container hidden">Load more </Col>
-                  }     
-                  {/* <Col>~ end of catalogue ~</Col> */}
-               </Row>
-            }
-
+            <Row className="row mt-5 text-center loader-area">
+               <LoadingComponent {...this.state} />
+            </Row>            
          </main> )
    }
 } 

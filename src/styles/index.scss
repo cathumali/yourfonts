@@ -117,6 +117,7 @@ body {
                     &:hover {
                         background-color: #00bcd4ff;
                         border-color: #00bcd4ff;
+                        color: #fff;
                     }
                     &:active {
                         border-color: #dfe5e8ff !important;
@@ -126,6 +127,10 @@ body {
                 }
             }
         }
+    }
+    .loader-area {
+        font-size: 1.32em;
+        font-weight: 600;
     }
 }
 
