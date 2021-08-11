@@ -29,14 +29,28 @@ body {
         }
     }
     .svg-cart {
-        color: #0abdd4;
+        color: #00bcd4b0;
         width: 2em;
         cursor: pointer;
+    }
+    .card.with-ad {
+        background-color: #00bcd4;
+        color: #fff;
     }
     .card {
         background: #f4f4f6;
         border: none;
         height: fit-content;
+        .ui.segment {
+            background: transparent;
+            position: absolute;
+            width: 100%;
+            margin: 1rem 0;
+            padding: 1em 1em;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+        }
         .product-container {
             height: 15em;
             position: relative;

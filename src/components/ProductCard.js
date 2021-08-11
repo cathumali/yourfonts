@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import moment from 'moment';
+import { Label, Segment } from 'semantic-ui-react'
 
 const ProductCard = (props) => {
    if( props.loading ) {
@@ -26,38 +27,42 @@ const ProductCard = (props) => {
 
                const display_date = displayDate(ascii.date);
 
-               return (<Col key={key}  xs={12} sm={6} md={4} lg={4} xl={4} xxl={3} >
-
-                  <Card >
+               return (<Col key={key}  xs={12} sm={6} md={3} xxl={3} >
+                  <Card className={`${ascii?.ad&&'with-ad'}`}>
+                     { ascii?.ad && <Segment><Label as='a' color='orange' ribbon='right'> Ad</Label></Segment> }
                      <Card.Body className="text-center">
-                        <Card.Title >
-                        <h6 className="title text-center text-uppercase mt-2 ">
-                           { ascii.words.map( (word,key) => <span key={key}>{ word } </span> )}
-                        </h6>
-                        <div className="caption-separator"></div> 
-                        </Card.Title>
+                        {  !ascii?.ad && 
+                           <Card.Title >
+                              <h6 className="title text-center text-uppercase mt-2 ">
+                                 { ascii.words.map( (word,key) => <span key={key}>{ word } </span> )}
+                              </h6>
+                              <div className="caption-separator"></div> 
+                           </Card.Title>
+                        }
                         <div className="product-container">
                            <Card.Text style={{fontSize:`${ascii.size}px`}}>{ ascii.ascii }</Card.Text>
                         </div>
                      </Card.Body>
                   </Card> 
-                  <Row className="mx-1 details-container mt-2">
-                     <Col className="p-0 position-relative">
-                        <div className="size-date">
-                           <div className="price"><span>${ ascii.price }</span></div>
-                           <span>Size:<b> {ascii.size}px</b></span>
-                          
-                        </div>
-                     </Col>
-                     <Col className="text-end p-0">
-                        <div className="cart-container">
-                           <Button className="add-to-cart" onClick={(e)=>handleAddToCart(e, ascii)}>Add to cart</Button>
-                           <p className="font-italic"> 
-                              <small>{ display_date }</small>
-                           </p>
-                        </div>
-                     </Col>
-                  </Row> 
+                  { !ascii?.ad &&
+                     <Row className="mx-1 details-container mt-2">
+                        <Col className="p-0 position-relative">
+                           <div className="size-date">
+                              <div className="price"><span>${ ascii.price }</span></div>
+                              <span>Size:<b> {ascii.size}px</b></span>
+                           
+                           </div>
+                        </Col>
+                        <Col className="text-end p-0">
+                           <div className="cart-container">
+                              <Button className="add-to-cart" onClick={(e)=>handleAddToCart(e, ascii)}>Add to cart</Button>
+                              <p className="font-italic"> 
+                                 <small>{ display_date }</small>
+                              </p>
+                           </div>
+                        </Col>
+                     </Row> 
+                  }
                </Col> )
             })
          }

@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import SortAsciiFacesBy from './SortAsciiFacesBy';
 import _ from 'lodash';
+import { insertAd } from '../utils/ads.js'
 
 const apiGetsService =  async (page) => {
    const requestHeaders= {
@@ -17,7 +18,7 @@ const apiGetsService =  async (page) => {
 }
 
 const LoadingComponent = (props) => {
-   const { loading, loading_more, total, ascii_data } = props || {}; 
+   const { loading_more, total, ascii_data } = props || {}; 
    if(total == ascii_data?.length){
       return <Col >~ end of catalogue ~</Col>
    }
@@ -85,7 +86,7 @@ class Main extends Component {
       } 
    }
    
-   processData = ( data, intialLoad = false ) => { 
+   processData = ( data ) => { 
       const { _start, _end, page, nextPage, } = this.state || {}; 
       const total = data.length; 
       this.setState({
@@ -125,11 +126,12 @@ class Main extends Component {
          });
          setTimeout(() => {
             const { ascii_data } = this.state.nextAsciiData || {};
+            const ascii_data__ = insertAd( [...ascii_data] )
             if( ascii_data.length && this.state.scrolled ) {
                this.setState({ 
                   ...this.state.nextAsciiData,
                   scrolled: false,
-                  ascii_data,
+                  ascii_data : ascii_data__,
                   nextAsciiData: {},
                   loading_more: false,
          
