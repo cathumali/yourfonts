@@ -51,28 +51,25 @@ class Main extends Component {
       
       if( count ) {
          
-         if( ascii_data) {
+         if( ascii_data && !ascii_data?.length ) {
 
-            if( !ascii_data.length ) {
-
-               // console.log('advancedFetchNextPage')
-               const { _end, chunks, page, nextPage } = this.state || {};         
-               const data = await apiGetsService( this.state.nextPage );
-      
-               if (data ) {
-                  this.setState({
-                     loading_more : false,
-                     nextAsciiData : {
-                        total: data.length,
-                        ascii_data: data.splice( parseInt( 0 ), parseInt( _end + chunks ) ),
-                        page: page + 1,
-                        nextPage: nextPage + 1,
-                        _start : _end + 1,
-                        _end : _end + chunks,
-                     }
-                  })
-               }
-            }
+            // console.log('advancedFetchNextPage')
+            const { _end, chunks, page, nextPage } = this.state || {};         
+            const data = await apiGetsService( this.state.nextPage );
+   
+            if (data ) {
+               this.setState({
+                  loading_more : false,
+                  nextAsciiData : {
+                     total: data.length,
+                     ascii_data: data.splice( parseInt( 0 ), parseInt( _end + chunks ) ),
+                     page: page + 1,
+                     nextPage: nextPage + 1,
+                     _start : _end + 1,
+                     _end : _end + chunks,
+                  }
+               })
+            } 
          }
       } 
    }
