@@ -11,9 +11,10 @@ export const cartReducer = (state = initialState, action) => {
                 data: [ ...state.data, action.payload] 
             };
         case cardConstants.REMOVE_FROM_CART:
+            const filered = state.data.filter( item=> item.id !== action.payload?.id )
             return {
                 ...state,
-                data: action.payload 
+                data: filered
             }; 
         default:
             return state;

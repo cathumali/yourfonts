@@ -6,25 +6,25 @@ import { Button } from 'react-bootstrap';
 
 const Cart = (props) => {
     const { data } = props.cart || {};
-    console.log(props.cart)
+
     return (<React.Fragment key={props.location.key}> 
 
         <Table celled padded>
             <Table.Header>
-            <Table.Row>
-                <Table.HeaderCell singleLine>Ascii Face</Table.HeaderCell>
-                <Table.HeaderCell>Name</Table.HeaderCell>
-                <Table.HeaderCell>Size</Table.HeaderCell>
-                <Table.HeaderCell>Price</Table.HeaderCell>
-                <Table.HeaderCell>Actions</Table.HeaderCell>
-            </Table.Row>
+                <Table.Row>
+                    <Table.HeaderCell singleLine>Ascii Face</Table.HeaderCell>
+                    <Table.HeaderCell>Name</Table.HeaderCell>
+                    <Table.HeaderCell>Size</Table.HeaderCell>
+                    <Table.HeaderCell>Price</Table.HeaderCell>
+                    <Table.HeaderCell>Actions</Table.HeaderCell>
+                </Table.Row>
             </Table.Header>
 
             <Table.Body>
 
             { data?.length &&
                 data.map( (item, key) => {
-                    return(<>
+                    return(<React.Fragment key={key}>
                     
                         <Table.Row>
                             <Table.Cell>
@@ -40,10 +40,10 @@ const Cart = (props) => {
                             ${ item.price }
                             </Table.Cell>
                             <Table.Cell>
-                                <Button> Remove Item</Button>
+                                <Button onClick={()=>props.removeItemToCart(item)}> Remove Item</Button>
                             </Table.Cell>
                         </Table.Row> 
-                    </>)
+                    </React.Fragment>)
                 })}
             </Table.Body>
         </Table>
@@ -52,7 +52,7 @@ const Cart = (props) => {
 }
  
 const mapStateToProps = ( state ) => ({
-    cart : state.cart 
+    cart : state.cart_data 
  });
  const mapDispatchToProps = (dispatch) => ({
     removeItemToCart  : (item) => dispatch( removeItemToCart(item) ),
