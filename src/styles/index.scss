@@ -30,8 +30,18 @@ body {
     }
     .svg-cart {
         color: #00bcd4b0;
-        width: 2em;
+        width: 3em;
         cursor: pointer;
+        position: relative;
+        .ui.label{
+            position: absolute  ;
+            top: 0;
+            right: -6px;
+            
+            // padding: .2em 1em;
+            // border-radius: 1em;
+
+        }
     }
     .card.with-ad {
         background-color: #00bcd4;

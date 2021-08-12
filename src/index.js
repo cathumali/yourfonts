@@ -5,11 +5,32 @@ import 'semantic-ui-css/semantic.min.css'
 import './styles/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { BrowserRouter } from 'react-router-dom';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from "redux-thunk";
+import rootReducer from "./redux/reducers/rootReducer";
+// import { composeWithDevTools } from 'redux-devtools-extension';
+const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk)
+);
+const store = createStore(rootReducer, enhancer);
 ReactDOM.render(
-  <App />,
+  <>
+    <Provider store={store}>
+      <BrowserRouter> 
+          <App />
+      </BrowserRouter>
+    </Provider>
+  </>,
   document.getElementById('root')
 );
+
+// ReactDOM.render(
+//   <App />,
+//   document.getElementById('root')
+// );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

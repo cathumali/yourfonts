@@ -18,8 +18,9 @@ const apiGetsService =  async (page) => {
 }
 
 const LoadingComponent = (props) => {
-   const { loading_more, total, ascii_data } = props || {}; 
-   if(total == ascii_data?.length){
+   const { loading_more, remaining, nextAsciiData } = props || {}; 
+   console.log(props)
+   if( !nextAsciiData?.ascii_data && (remaining < 0 )){
       return <Col >~ end of catalogue ~</Col>
    }
    if( loading_more) {

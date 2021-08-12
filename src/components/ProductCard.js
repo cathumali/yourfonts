@@ -2,6 +2,8 @@ import React from 'react';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import moment from 'moment';
 import { Label, Segment } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import { removeItemToCart, addItemToCart } from '../redux/actions';
 
 const ProductCard = (props) => {
    if( props.loading ) {
@@ -19,6 +21,7 @@ const ProductCard = (props) => {
 
    const handleAddToCart = (e, product_data) => {
       console.log(product_data)
+      props.addItemToCart( product_data )
    }
 
    return (<React.Fragment>
@@ -34,7 +37,7 @@ const ProductCard = (props) => {
                         {  !ascii?.ad && 
                            <Card.Title >
                               <h6 className="title text-center text-uppercase mt-2 ">
-                                 { ascii.words.map( (word,key) => <span key={key}>{ word } </span> )}
+                                 <span >{ ascii.words?.join(',  ')} </span>
                               </h6>
                               <div className="caption-separator"></div> 
                            </Card.Title>
@@ -68,4 +71,12 @@ const ProductCard = (props) => {
          }
    </React.Fragment> )
 }
-export default ProductCard;
+
+const mapStateToProps = ( state ) => ({
+   cart : state.cart 
+});
+const mapDispatchToProps = (dispatch) => ({
+   removeItemToCart  : (item) => dispatch( removeItemToCart(item) ),
+   addItemToCart : (item) => dispatch( addItemToCart(item) ),
+});
+export default connect( mapStateToProps, mapDispatchToProps )(ProductCard)
