@@ -22,7 +22,7 @@ const Cart = (props) => {
 
             <Table.Body>
 
-            { data?.length &&
+            {   Boolean(data?.length) ?
                 data.map( (item, key) => {
                     return(<React.Fragment key={key}>
                     
@@ -44,7 +44,11 @@ const Cart = (props) => {
                             </Table.Cell>
                         </Table.Row> 
                     </React.Fragment>)
-                })}
+                }) :
+                <Table.Row className="text-center">
+                    <div className="text-center"> ~ No item in your cart ~ </div>
+                </Table.Row>
+            }   
             </Table.Body>
         </Table>
 
